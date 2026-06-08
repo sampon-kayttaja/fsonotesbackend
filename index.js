@@ -1,4 +1,5 @@
 const express = require('express')
+const Note = require('./models/note')
 
 const app = express()
 app.use(express.json())
@@ -22,9 +23,10 @@ let notes = [
   }
 ]
 
-
 app.get('/api/notes', (request, response) => {
-  response.json(notes)
+  Note.find({}).then(notes => {
+    response.json(notes)
+  })
 })
 
 app.get('/api/notes/:id', (request, response) => {
@@ -93,3 +95,5 @@ const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+
